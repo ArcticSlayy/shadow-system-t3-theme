@@ -125,6 +125,8 @@ The agent edits `shadow-system.json` in the themes folder. Keep a copy of the or
 
 ## Customize
 
+**Full guide:** [docs/CUSTOMIZE.md](docs/CUSTOMIZE.md) covers every color, label, rank name, animation timing and layer, plus how T3 themes load (and why **Create theme** is handy for picking colors but can't hold the background art).
+
 Everything lives in `theme/shadow-system.json`:
 
 - `colors`: the native palette (`accent`, `surface`, `sidebar`, `error`, ...). Change `#3d8bff` here to retint the app chrome.
