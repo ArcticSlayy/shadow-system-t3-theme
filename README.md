@@ -69,6 +69,22 @@ The art is not just wallpaper. Its glowing eyes, the distant army, the header ch
 
 ## Install
 
+### One line
+
+Windows (PowerShell)
+
+```powershell
+irm https://raw.githubusercontent.com/ArcticSlayy/shadow-system-t3-theme/main/install.ps1 | iex
+```
+
+macOS / Linux
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/ArcticSlayy/shadow-system-t3-theme/main/install.sh | bash
+```
+
+**Requirements.** Use a T3 Code desktop or web build with **Settings → Appearance → Themes**. Theme support is unavailable in the mobile app. The installed theme makes no network requests.
+
 Copy **both** files into T3 Code's themes folder, then pick the theme.
 
 > **Don't use Settings → Add theme for this one.** T3 doesn't load background images for themes imported through that box, so you'd get the colors without the art. If you already imported it there, remove that copy so the folder version (with the art) is used.
@@ -105,7 +121,7 @@ In T3 Code open **Settings → Appearance**, pick **Shadow Monarch: System** und
 
 ## Or just ask your T3 agent
 
-T3 Code agents can install and restyle themes themselves. Paste this into a thread:
+T3 Code agents can install and restyle themes themselves. The repo's [AGENTS.md](AGENTS.md) covers installation and customization rules. Paste this into a thread:
 
 ```text
 Install the Shadow System theme from https://github.com/ArcticSlayy/shadow-system-t3-theme.
@@ -130,7 +146,7 @@ The agent edits `shadow-system.json` in the themes folder. Keep a copy of the or
 Everything lives in `theme/shadow-system.json`:
 
 - `colors`: the native palette (`accent`, `surface`, `sidebar`, `error`, ...). Change `#3d8bff` here to retint the app chrome.
-- `css`: extra styling. The main knobs are custom properties on `:root`:
+- `css`: extra styling. The knobs block at the start of `css` controls speck opacity, blink and wave timing, typing brightness, and the wallpaper shading. See [knob defaults](docs/CUSTOMIZE.md#knobs). Other custom properties include:
 
 | Property | What it controls |
 |---|---|
@@ -153,6 +169,7 @@ Notes for CSS tinkerers: T3 caps a theme's CSS at 100k characters (this one is a
 - The specks move with a GPU transform.
 - While an agent works, the header chip and the Stop/Send button add small glow animations.
 - No backdrop blur anywhere.
+- **Measured cost (rough, Windows, Nov 2026):** while agents were streaming, T3 used noticeably more CPU with this theme than with the stock theme, even with motion off. So the cost is mostly in the CSS itself, not the animations. The numbers were too noisy to publish. A proper profile and a lighter version are in progress.
 - **Reduced motion is respected:** with the OS "reduce motion" setting on, the background animations are off and you get the same look, static.
 
 ## Known limits

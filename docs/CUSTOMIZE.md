@@ -12,6 +12,20 @@ You can also ask a T3 agent to make any of these changes for you. Name the theme
 - The `css` field is limited to 100,000 characters (this theme uses about 77k). T3 drops any CSS declaration that contains a backslash, and allows `url()` only for `data:` URIs.
 - T3 documents a set of stable selectors (`[data-workspace-area="conversation"]`, `[data-chat-header]`, `[data-slot="composer-host"]`, `.chat-markdown` and others). Other class names can change between releases.
 
+## Knobs
+
+Edit the first `:root` rule in `css` to tune these settings.
+
+| Knob | What it does | Default |
+|---|---|---|
+| `--sl-specks` | Floating speck opacity. Set to `0` to hide them. | `.6` |
+| `--sl-blink` | Length of the army's idle blink cycle. | `18s` |
+| `--sl-wave` | Length of the army's wake-up transition. | `2.4s` |
+| `--sl-watch` | Eye brightness while drafting. | `1.45` |
+| `--sl-shade1` | Chat background shade opacity at 26%. | `.40` |
+| `--sl-shade2` | Chat background shade opacity at 44%. | `.58` |
+| `--sl-shade3` | Chat background shade opacity at 68%. | `.56` |
+
 ## Colors
 
 **Palette (`colors` in the JSON):** these set the app's native colors.
@@ -48,7 +62,7 @@ When the context window reaches amber or red, these variables switch to amber (`
 ## Background art
 
 - **Swap the image:** replace `shadow-system.png`. The theme was composed for **1920x1080**, with the figure on the left and a quiet right side so text stays readable. The image is anchored to the bottom left and scaled to cover the chat area.
-- **Readability shading:** the chat area's `background` starts with a dark left-to-right gradient, darkest in the middle where the text sits (`.40` at 26%, `.58` at 44%, `.56` at 68%). Raise those numbers for more contrast, or lower them to show more of the art.
+- **Readability shading:** the chat area's background uses a dark left-to-right gradient. Raise `--sl-shade1`, `--sl-shade2`, and `--sl-shade3` for more contrast, or lower them to show more of the art.
 - **The glowing eyes and the army** are drawn on top, at fixed pixel positions in this art. If you use your own image, remove or move those layers (next section). Otherwise you'll get glows in odd places.
 
 ## Live layers
@@ -57,9 +71,9 @@ The overlays are positioned in image pixels converted to screen size: x maps to 
 
 | Layer | Selector | Behavior | Knobs |
 |---|---|---|---|
-| Hood's eyes and the figure's glint | `[data-workspace-area="conversation"]::before` | The red eyes breathe at idle (`slEye 8s`). A heartbeat (`slBeat`) plays while an agent works, a question waits, or context is amber/red. Typing sets `--watch: 1.45`, which brightens the eyes and shows a small blue glint on each of the figure's eyes. | `--beatT` = heartbeat period: 9s idle, 3s working, 1.5s with a question, 6s amber, 3.6s red |
-| Distant army | `[data-workspace-area="conversation"]::after` | 14 soldier glints. At idle, one soldier opens its eyes every ~2.6s (`slWink 18s`). Working, a waiting question, or hovering Send sets `--army: 1`, and the eyes light in a wave outward from the figure. | the blink cycle `18s`; the wave speed is the `--army` transition, `2.4s` |
-| Floating specks | `[data-workspace-area="conversation"] > :last-child::after` | Specks drift up the left 46% of the chat, behind the text. | `opacity: .6`; delete the rule to turn them off |
+| Hood's eyes and the figure's glint | `[data-workspace-area="conversation"]::before` | The red eyes breathe at idle (`slEye 8s`). A heartbeat (`slBeat`) plays while an agent works, a question waits, or context is amber/red. Typing applies `--sl-watch`, which brightens the eyes and shows a small blue glint on each of the figure's eyes. | `--beatT` = heartbeat period: 9s idle, 3s working, 1.5s with a question, 6s amber, 3.6s red |
+| Distant army | `[data-workspace-area="conversation"]::after` | 14 soldier glints. At idle, one soldier opens its eyes every ~2.6s at the default blink speed. Working, a waiting question, or hovering Send sets `--army: 1`, and the eyes light in a wave outward from the figure. | `--sl-blink` and `--sl-wave` |
+| Floating specks | `[data-workspace-area="conversation"] > :last-child::after` | Specks drift up the left 46% of the chat, behind the text. | `--sl-specks` |
 
 All background animation sits inside `@media (prefers-reduced-motion: no-preference)`, so the OS "reduce motion" setting turns it off.
 
