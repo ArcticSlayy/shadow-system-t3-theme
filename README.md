@@ -27,7 +27,7 @@ The art is not just wallpaper. Its glowing eyes, the distant army, the header ch
 
 <p align="center">
   <img src="docs/screenshots/new-thread.png" alt="New thread screen with hooded figure art and the command composer" width="100%"><br>
-  <sub>New thread, idle: hero label, command composer, the hooded figure and the army on the horizon (one soldier is mid-blink).</sub>
+  <sub>New thread, idle: hero label, command composer, the hooded figure and the army on the horizon.</sub>
 </p>
 
 <p align="center">
@@ -47,10 +47,10 @@ The art is not just wallpaper. Its glowing eyes, the distant army, the header ch
 
 <p align="center">
   <img src="docs/screenshots/settings.png" alt="Settings, Appearance, showing the Themes grid" width="100%"><br>
-  <sub>Settings, Appearance: where you add and pick themes.</sub>
+  <sub>Settings, Appearance: where you pick themes.</sub>
 </p>
 
-> All screenshots are real, unedited app captures except the settings shot, whose background is pixelated.
+> The two full-window shots are real app captures. The details are crops: the eyes comparison puts two captures side by side, the blink is enlarged from a capture, and the settings shot has its background pixelated.
 
 ## What reacts to what
 
@@ -59,9 +59,9 @@ The art is not just wallpaper. Its glowing eyes, the distant army, the header ch
 | **Idle** | The hood's red eyes breathe slowly. Every few seconds one distant soldier opens its eyes. Blue specks drift up the left side (inside threads). |
 | **You type a message** | The hood's eyes brighten and the small figure's eyes glint blue. |
 | **You hover Send** | The distant army wakes, eyes lighting in a wave outward from the figure. |
-| **An agent is working, or a question is waiting** | A heartbeat pulses in the hood's eyes and the whole army stays awake, pulsing with it. The header chip switches to "Quest active" with a scan. The question card itself stays flat and calm. |
+| **An agent is working, or a question is waiting** | A heartbeat pulses in the hood's eyes and the whole army stays awake, pulsing with it. The header chip reads "Quest active" (or "Awaiting orders" for a question) and pulses. The question card itself stays flat and calm. |
 | **Context window turns amber or red** | Alert colors on the header chip and meter ("Mana low" at amber, "Penalty zone" at red), and a faster heartbeat. |
-| **Context window fills up** | The header chip shows a rank (E-rank up through A-rank and beyond) and the accent steps brighter as the context fills. |
+| **Context window fills up** | The header chip shows a rank (E-rank upward) as the context fills. |
 | **Rank changes** | The rank chip plays a one-shot level-up ping. |
 | **A turn finishes** | A `[ QUEST COMPLETE ]` label, plus a sweep on Done rows in the sidebar. |
 | **Messages, dialogs, toasts** | Assistant messages carry a `[ SYSTEM ]` label, the new-thread hero types its own `[ SYSTEM ]` label, toasts get `[ NOTIFICATION ]`, and dialogs, the command palette and menus **unfold** from a line into a window. |
@@ -69,20 +69,27 @@ The art is not just wallpaper. Its glowing eyes, the distant army, the header ch
 
 ## Install
 
-Pick one of two options.
+Copy **both** files into T3 Code's themes folder, then pick the theme.
 
-### A. In the app
+> **Don't use Settings → Add theme for this one.** T3 doesn't load background images for themes imported through that box, so you'd get the colors without the art. If you already imported it there, remove that copy so the folder version (with the art) is used.
 
-1. Download `theme/shadow-system.json` and `theme/shadow-system.png`.
-2. In T3 Code open **Settings → Appearance → Add theme**, drop in (or paste) the JSON and add it.
-3. Put `shadow-system.png` in the themes folder (table below) next to the theme file, named exactly after the theme id: `shadow-system.png`. T3 only loads background images from that folder; it can't be imported through the Add theme box.
-4. Under **Themes**, pick **Shadow Monarch: System** for dark mode, and set the color scheme above it to **Dark** (the theme is dark-only). You may need to scroll the grid.
+### A. Script (easiest)
 
-Note: if T3 says the theme is already installed and you choose "Keep both", the copy gets a different id. Rename the PNG to match that id.
+From a clone or download of this repo:
 
-### B. Script
+```powershell
+./install.ps1        # Windows (PowerShell)
+```
 
-`install.ps1` / `install.sh` copy both files into the themes folder.
+```sh
+sh install.sh        # macOS / Linux
+```
+
+Both scripts check both files first, back up any different existing copy with a timestamp, copy the pair, and never delete anything.
+
+### B. By hand
+
+Copy `theme/shadow-system.json` and `theme/shadow-system.png` into the themes folder. Keep the names exactly: the image must be named after the theme id.
 
 | OS | Themes folder | Status |
 |---|---|---|
@@ -92,19 +99,9 @@ Note: if T3 says the theme is already installed and you choose "Keep both", the 
 
 If you set the `T3CODE_HOME` environment variable, the base folder moves there. The install scripts honor it.
 
-**Windows (PowerShell):**
+### Then pick it
 
-```powershell
-./install.ps1
-```
-
-**macOS / Linux:**
-
-```sh
-sh install.sh
-```
-
-Both scripts create the folder if it is missing, copy the two files, print what they did, and never delete anything. If a different `shadow-system` file is already there, it is saved as `*.bak` first. Then pick the theme as in step 4 above.
+In T3 Code open **Settings → Appearance**, pick **Shadow Monarch: System** under **Themes** for dark mode, and set the color scheme above it to **Dark** (the theme is dark-only). You may need to scroll the grid.
 
 ## Or just ask your T3 agent
 
@@ -149,11 +146,12 @@ Notes for CSS tinkerers: T3 caps a theme's CSS at 100k characters (this one is a
 
 ## Performance
 
-- The art is a static background that never repaints.
-- The eyes and the army are two small layers, animated in steps (a few repaints per second).
-- The specks move on the GPU (transform only).
+- The background image itself is static and never repaints.
+- The live parts are two small overlay layers over the art. The hood's eyes update about 2.5 times a second at idle. A soldier's blink and the working heartbeat update more often (roughly 7 to 30 times a second), but only over those small areas.
+- The specks move with a GPU transform.
+- While an agent works, the header chip and the Stop/Send button add small glow animations.
 - No backdrop blur anywhere.
-- **Reduced motion is respected:** with the OS "reduce motion" setting on, all animation is off and you get the same look, static.
+- **Reduced motion is respected:** with the OS "reduce motion" setting on, the background animations are off and you get the same look, static.
 
 ## Known limits
 
@@ -162,7 +160,8 @@ CSS can't restyle everything:
 - The native right-click menu (it is drawn by the OS, not the page).
 - Hard-coded strings such as "Open a surface" and "Search...".
 - Provider brand colors in the usage cost chart.
-- The pull-request page background stays plain black (no styling hook found).
+- The army sits at the far right of the art. On narrow chat panes it's off-screen (the art is anchored left so the figure always shows).
+- The header chip hides on windows 1300px wide or less.
 - Specks only show inside threads (the new-thread page has no chat canvas).
 - Some effects (toast labels, the Done-row sweep, the amber/red stages on a very long thread) have had less live testing than the rest.
 
