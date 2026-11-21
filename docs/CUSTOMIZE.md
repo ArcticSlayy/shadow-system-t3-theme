@@ -9,7 +9,7 @@ You can also ask a T3 agent to make any of these changes for you. Name the theme
 - A theme in the **themes folder** can have a background image: `<theme id>.png` (or `.jpg`/`.webp`, up to 16 MB) next to the JSON. The CSS shows it through `var(--theme-background-image)`.
 - Themes added with **Settings → Appearance → Add theme**, or made in **Create theme**, are saved in the app's own list instead. **Those never load a background image.** Keep this theme as files in the folder.
 - **Create theme is still useful for picking colors.** It edits the palette roles (Background, Surface, Text, Border and so on) with a live preview. Try colors there, then copy the hex values into `colors` in `shadow-system.json`.
-- The `css` field is limited to 100,000 characters (this theme uses about 77k). T3 drops any CSS declaration that contains a backslash, and allows `url()` only for `data:` URIs.
+- The `css` field is limited to 100,000 characters (this theme uses about 74k). T3 drops any CSS declaration that contains a backslash, and allows `url()` only for `data:` URIs.
 - T3 documents a set of stable selectors (`[data-workspace-area="conversation"]`, `[data-chat-header]`, `[data-slot="composer-host"]`, `.chat-markdown` and others). Other class names can change between releases.
 
 ## Knobs
@@ -65,7 +65,7 @@ When the context window reaches amber or red, these variables switch to amber (`
 | What | How to change it |
 |---|---|
 | Header chip text | `--hdr`: "System online", "Quest active" (agent working), "Awaiting orders" (question waiting), "Mana low" (amber), "Penalty zone" (red) |
-| Context (GATE rank) | The header chip reads "◆ <state> · <X>-rank Gate": 0-9% E, 10-24% D, 25-44% C, 45-59% B, 60-74% A, 75-100% S; at T3's red context stage it reads "Red Gate". States: System online / Quest active (working) / Awaiting orders (question) / Mana low (amber) / Penalty zone (red). At red the assistant label reads "[ DUNGEON BREAK ]" and the details card "[ PENALTY ZONE ]". |
+| Context (GATE rank) | The header chip reads "◆ System online · C-rank Gate" (state, then rank): 0-9% E, 10-24% D, 25-44% C, 45-59% B, 60-74% A, 75-100% S; at T3's red context stage it reads "Red Gate". States: System online / Quest active (working) / Awaiting orders (question) / Mana low (amber) / Penalty zone (red). At red the assistant label reads "[ DUNGEON BREAK ]" and the details card "[ PENALTY ZONE ]". |
 | Label font | `--sysfont` (Bahnschrift, then Segoe UI) |
 | Labels | Search `css` for `[ SYSTEM ]`, `[ QUEST COMPLETE ]`, `[ NOTIFICATION ]`, `HUNTER` (your messages) and `COMMAND` (composer), and edit the `content:` text |
 

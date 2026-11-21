@@ -58,10 +58,10 @@ The art is not just wallpaper. Its glowing eyes, the distant army, the header ch
 |---|---|
 | **Idle** | The hood's red eyes breathe slowly. Every few seconds one distant soldier opens its eyes. Blue specks drift up the left side (inside threads). |
 | **You type a message** | The hood's eyes brighten and the small figure's eyes glint blue. |
-| **You hover Send** | The distant army wakes, eyes lighting in a wave outward from the figure. |
+| **You hover Send** | The distant army wakes, eyes lighting in a left-to-right wave, outward from the figure. |
 | **An agent is working, or a question is waiting** | A heartbeat pulses in the hood's eyes and the whole army stays awake, pulsing with it. The header chip reads "Quest active" (or "Awaiting orders" for a question) and pulses. The question card itself stays flat and calm. |
 | **Context window turns amber or red** | Alert colors on the header chip and meter ("Mana low" at amber, "Penalty zone" at red), and a faster heartbeat. |
-| **Context window fills up** | The header chip shows a GATE rank: "◆ <state> · <X>-rank Gate" (0-9% E, 10-24% D, 25-44% C, 45-59% B, 60-74% A, 75-100% S; at T3's red context stage it reads "Red Gate"). |
+| **Context window fills up** | The header chip shows a GATE rank: "◆ System online · C-rank Gate" (the state word, then the rank) (0-9% E, 10-24% D, 25-44% C, 45-59% B, 60-74% A, 75-100% S; at T3's red context stage it reads "Red Gate"). |
 | **Reasoning effort changes** | The composer's model button shows a rank pill for the current effort (None/Minimal/Off E, Low D, Medium C, High B, Extra High A, Max S, Ultrathink/Ultra MONARCH). Effort menu rows get rank pills, a "laser" underline that grows with rank, and a stepped sheen. |
 | **Rank changes** | The rank chip plays a one-shot level-up ping. |
 | **A turn finishes** | A `[ QUEST COMPLETE ]` label, plus a sweep on Done rows in the sidebar. |
@@ -161,7 +161,7 @@ Heads-up: the amber and red alert stages and each rank bucket **override** `--ac
 
 **Swap the art:** replace `theme/shadow-system.png` (installed next to the JSON) with your own image. The theme was composed for **1920x1080**, with the figure at the far left and a quiet, dark right side so the UI stays readable. The eye glows are positioned to the shipped art, so with new art expect to move or remove those layers in the CSS.
 
-Notes for CSS tinkerers: T3 caps a theme's CSS at 100k characters (this one is about 77k), and the CSS here contains no backslashes.
+Notes for CSS tinkerers: T3 caps a theme's CSS at 100k characters (this one is about 74k), and the CSS here contains no backslashes.
 
 ## Performance
 
@@ -183,7 +183,7 @@ CSS can't restyle everything:
 - The header chip hides on windows 1300px wide or less.
 - Specks only show inside threads (the new-thread page has no chat canvas).
 - Some effects (toast labels, the Done-row sweep, the amber/red stages on a very long thread) have had less live testing than the rest.
-- Effort menu rows are ranked by position (T3 gives them no value attribute): 5 rows Low..Max = D..S, 4 rows = D..A, 7 rows (Off, Minimal, Low..Max) = E,E,D..S, 2-row on/off toggles get none.
+- Effort menu rows are ranked by position (T3 gives them no value attribute): 5 rows Low..Max = D..S, 6 rows (with Ultra) = D..S then MONARCH, 4 rows = D..A, 7 rows (Off, Minimal, Low..Max) = E,E,D..S, 2-row on/off toggles get none.
 
 ## Credits and disclaimer
 

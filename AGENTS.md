@@ -17,6 +17,6 @@
 - Attach visuals to `[data-workspace-area="conversation"]` or its `> :last-child`. The `[data-chat-canvas]` selector sits in a hidden subtree and never paints.
 - Verify on screen after every change. Check the wallpaper, text readability, and any affected live layers.
 - Keep it cheap: animations on the 125 ms grid with steps() counted per keyframe segment; animate only opacity/transform; never animate custom properties; give transformed pseudo-elements display:inline-block or block.
-- Context fill is now a GATE rank in the header chip: "◆ <state> · <X>-rank Gate" (0-9% E ... 75-100% S; Red Gate at T3's red stage).
+- Context fill is now a GATE rank in the header chip: "◆ STATE · X-rank Gate" (0-9% E ... 75-100% S; Red Gate at T3's red stage).
 - Hunter ranks moved to the reasoning-effort picker: rank pills, laser underline, stepped sheen; colors E steel #6b7385 ... MONARCH black core with #8cc4ff edge.
 - Effort rows are ranked by position (T3 gives no value attribute).
