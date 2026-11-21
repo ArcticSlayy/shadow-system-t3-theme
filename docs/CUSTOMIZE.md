@@ -59,7 +59,7 @@ The overlays are positioned in image pixels converted to screen size: x maps to 
 |---|---|---|---|
 | Hood's eyes and the figure's glint | `[data-workspace-area="conversation"]::before` | The red eyes breathe at idle (`slEye 8s`). A heartbeat (`slBeat`) plays while an agent works, a question waits, or context is amber/red. Typing sets `--watch: 1.45`, which brightens the eyes and shows a small blue glint on each of the figure's eyes. | `--beatT` = heartbeat period: 9s idle, 3s working, 1.5s with a question, 6s amber, 3.6s red |
 | Distant army | `[data-workspace-area="conversation"]::after` | 14 soldier glints. At idle, one soldier opens its eyes every ~2.6s (`slWink 18s`). Working, a waiting question, or hovering Send sets `--army: 1`, and the eyes light in a wave outward from the figure. | the blink cycle `18s`; the wave speed is the `--army` transition, `2.4s` |
-| Floating specks | `[data-chat-canvas]::after` | Specks drift up the left 46% of the chat. They show inside threads only. | `opacity: .6`; delete the rule to turn them off |
+| Floating specks | `[data-workspace-area="conversation"] > :last-child::after` | Specks drift up the left 46% of the chat, behind the text. | `opacity: .6`; delete the rule to turn them off |
 
 All background animation sits inside `@media (prefers-reduced-motion: no-preference)`, so the OS "reduce motion" setting turns it off.
 
