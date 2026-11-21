@@ -19,7 +19,7 @@ Made by **[@ArcticSlayy](https://github.com/ArcticSlayy)**
 
 ---
 
-**Shadow System** (`shadow-system`) is a dark theme for the T3 Code desktop app, inspired by the blue "System" windows of *Solo Leveling*. Near-black surfaces, one vivid blue accent (no purple anywhere, even project icons are remapped), Segoe UI, and a hooded-figure painting behind the chat.
+**Shadow System** (`shadow-system`) is a dark theme for the T3 Code desktop app, inspired by the blue "System" windows of *Solo Leveling*. Near-black surfaces, one vivid blue accent (no purple anywhere; project icons get the blue glow too), Segoe UI, and a hooded-figure painting behind the chat.
 
 The art is not just wallpaper. Its glowing eyes, the distant army, the header chip and the usage bars all follow live app state: working, waiting on a question, typing, hovering Send, and how full the context window is.
 
@@ -56,7 +56,7 @@ The art is not just wallpaper. Its glowing eyes, the distant army, the header ch
 
 | When this happens | The theme does this |
 |---|---|
-| **Idle** | The hood's red eyes breathe slowly. Every few seconds one distant soldier opens its eyes. Blue specks drift up the left side (inside threads). |
+| **Idle** | The hood's red eyes breathe slowly. Every few seconds one distant soldier opens its eyes. Blue specks drift up the left side. |
 | **You type a message** | The hood's eyes brighten and the small figure's eyes glint blue. |
 | **You hover Send** | The distant army wakes, eyes lighting in a left-to-right wave, outward from the figure. |
 | **An agent is working, or a question is waiting** | A heartbeat pulses in the hood's eyes and the whole army stays awake, pulsing with it. The header chip reads "Quest active" (or "Awaiting orders" for a question) and pulses. The question card itself stays flat and calm. |
@@ -147,15 +147,16 @@ The agent edits `shadow-system.json` in the themes folder. Keep a copy of the or
 Everything lives in `theme/shadow-system.json`:
 
 - `colors`: the native palette (`accent`, `surface`, `sidebar`, `error`, ...). Change `#3d8bff` here to retint the app chrome.
-- `css`: extra styling. The knobs block at the start of `css` controls speck opacity, blink and wave timing, typing brightness, and the wallpaper shading. See [knob defaults](docs/CUSTOMIZE.md#knobs). Other custom properties include:
+- `css`: extra styling. The knobs block at the start of `css` controls speck opacity, the army wake-up timing, eye brightness while typing, and the wallpaper shading. See [knob defaults](docs/CUSTOMIZE.md#knobs). Other custom properties include:
 
 | Property | What it controls |
 |---|---|
 | `--ac` / `--ac2` | Accent and its lighter companion (`#3d8bff` / `#8cc4ff`) |
 | `--acs` / `--acb` / `--acg` | Accent surface, border and glow |
 | `--sysfont` | Font stack for the System-style labels (Bahnschrift, then Segoe UI) |
-| `--hdr` | Header chip text ("System online") |
-| `--army`, `--beat`, `--watch` | Live-state dials the animations read: army awake (0 or 1), heartbeat strength, typing brightness |
+| `--hdr-s` | Header chip state text ("System online") |
+| `--rk` | Gate rank text in the header chip ("E-rank Gate" ... "S-rank Gate", "Red Gate") |
+| `--army-img` | Which animated SVG the army layer shows (idle winks, awake wave, heartbeat) |
 
 Heads-up: the amber and red alert stages and each rank bucket **override** `--ac` on purpose. To change the accent everywhere, find-and-replace the blue hex values (`#3d8bff` and friends) across the whole `css` string rather than editing only the first `:root` rule.
 
@@ -167,7 +168,7 @@ Notes for CSS tinkerers: T3 caps a theme's CSS at 100k characters (this one is a
 
 - The background image itself is static and never repaints.
 - The eyes and the army are small animated SVG images on their own GPU layers, so a blink only redraws its own small box.
-- Every animation, including T3's own spinners, steps on one shared 125 ms beat (8 times a second). The screen only redraws when something actually changes, not on every refresh of a high-refresh monitor.
+- Every looping animation, including T3's own spinners, steps on one shared 125 ms beat (8 times a second). Only short one-shots (a dialog unfolding, the hero label typing in) run smooth. The screen only redraws when something actually changes, not on every refresh of a high-refresh monitor.
 - Only opacity and transform are animated. No backdrop blur anywhere.
 - **Measured cost (real T3 on Windows, renderer + GPU process CPU as % of one core, rough):** before ~210%; now roughly 27-60% depending on activity; stock theme ~19-26%; this theme with all motion off ~13%. Headless Chromium harness: full redraws per 10 s went from ~1,440 to ~125. Lessons: animating registered custom properties runs on the main thread every frame even with steps(); steps() applies per keyframe segment; inline pseudo-element transforms don't composite.
 - **Reduced motion is respected:** with the OS "reduce motion" setting on, the background animations are off and you get the same look, static.
@@ -181,7 +182,6 @@ CSS can't restyle everything:
 - Provider brand colors in the usage cost chart.
 - The army sits at the far right of the art. On narrow chat panes it's off-screen (the art is anchored left so the figure always shows).
 - The header chip hides on windows 1300px wide or less.
-- Specks only show inside threads (the new-thread page has no chat canvas).
 - Some effects (toast labels, the Done-row sweep, the amber/red stages on a very long thread) have had less live testing than the rest.
 - Effort menu rows are ranked by position (T3 gives them no value attribute): 5 rows Low..Max = D..S, 6 rows (with Ultra) = D..S then MONARCH, 4 rows = D..A, 7 rows (Off, Minimal, Low..Max) = E,E,D..S, 2-row on/off toggles get none.
 
