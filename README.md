@@ -61,7 +61,8 @@ The art is not just wallpaper. Its glowing eyes, the distant army, the header ch
 | **You hover Send** | The distant army wakes, eyes lighting in a wave outward from the figure. |
 | **An agent is working, or a question is waiting** | A heartbeat pulses in the hood's eyes and the whole army stays awake, pulsing with it. The header chip reads "Quest active" (or "Awaiting orders" for a question) and pulses. The question card itself stays flat and calm. |
 | **Context window turns amber or red** | Alert colors on the header chip and meter ("Mana low" at amber, "Penalty zone" at red), and a faster heartbeat. |
-| **Context window fills up** | The header chip shows a rank (E-rank upward) as the context fills. |
+| **Context window fills up** | The header chip shows a GATE rank: "◆ <state> · <X>-rank Gate" (0-9% E, 10-24% D, 25-44% C, 45-59% B, 60-74% A, 75-100% S; at T3's red context stage it reads "Red Gate"). |
+| **Reasoning effort changes** | The composer's model button shows a rank pill for the current effort (None/Minimal/Off E, Low D, Medium C, High B, Extra High A, Max S, Ultrathink/Ultra MONARCH). Effort menu rows get rank pills, a "laser" underline that grows with rank, and a stepped sheen. |
 | **Rank changes** | The rank chip plays a one-shot level-up ping. |
 | **A turn finishes** | A `[ QUEST COMPLETE ]` label, plus a sweep on Done rows in the sidebar. |
 | **Messages, dialogs, toasts** | Assistant messages carry a `[ SYSTEM ]` label, the new-thread hero types its own `[ SYSTEM ]` label, toasts get `[ NOTIFICATION ]`, and dialogs, the command palette and menus **unfold** from a line into a window. |
@@ -165,11 +166,10 @@ Notes for CSS tinkerers: T3 caps a theme's CSS at 100k characters (this one is a
 ## Performance
 
 - The background image itself is static and never repaints.
-- The live parts are two small overlay layers over the art. The hood's eyes update about 2.5 times a second at idle. A soldier's blink and the working heartbeat update more often (roughly 7 to 30 times a second), but only over those small areas.
-- The specks move with a GPU transform.
-- While an agent works, the header chip and the Stop/Send button add small glow animations.
-- No backdrop blur anywhere.
-- **Measured cost (rough, Windows, Nov 2026):** while agents were streaming, T3 used noticeably more CPU with this theme than with the stock theme, even with motion off. So the cost is mostly in the CSS itself, not the animations. The numbers were too noisy to publish. A proper profile and a lighter version are in progress.
+- The eyes and the army are small animated SVG images on their own GPU layers, so a blink only redraws its own small box.
+- Every animation, including T3's own spinners, steps on one shared 125 ms beat (8 times a second). The screen only redraws when something actually changes, not on every refresh of a high-refresh monitor.
+- Only opacity and transform are animated. No backdrop blur anywhere.
+- **Measured cost (real T3 on Windows, renderer + GPU process CPU as % of one core, rough):** before ~210%; now roughly 27-60% depending on activity; stock theme ~19-26%; this theme with all motion off ~13%. Headless Chromium harness: full redraws per 10 s went from ~1,440 to ~125. Lessons: animating registered custom properties runs on the main thread every frame even with steps(); steps() applies per keyframe segment; inline pseudo-element transforms don't composite.
 - **Reduced motion is respected:** with the OS "reduce motion" setting on, the background animations are off and you get the same look, static.
 
 ## Known limits
@@ -183,6 +183,7 @@ CSS can't restyle everything:
 - The header chip hides on windows 1300px wide or less.
 - Specks only show inside threads (the new-thread page has no chat canvas).
 - Some effects (toast labels, the Done-row sweep, the amber/red stages on a very long thread) have had less live testing than the rest.
+- Effort menu rows are ranked by position (T3 gives them no value attribute): 5 rows Low..Max = D..S, 4 rows = D..A, 7 rows (Off, Minimal, Low..Max) = E,E,D..S, 2-row on/off toggles get none.
 
 ## Credits and disclaimer
 

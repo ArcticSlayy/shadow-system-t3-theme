@@ -19,12 +19,22 @@ Edit the first `:root` rule in `css` to tune these settings.
 | Knob | What it does | Default |
 |---|---|---|
 | `--sl-specks` | Floating speck opacity. Set to `0` to hide them. | `.6` |
-| `--sl-blink` | Length of the army's idle blink cycle. | `18s` |
 | `--sl-wave` | Length of the army's wake-up transition. | `2.4s` |
 | `--sl-watch` | Eye brightness while drafting. | `1.45` |
 | `--sl-shade1` | Chat background shade opacity at 26%. | `.40` |
 | `--sl-shade2` | Chat background shade opacity at 44%. | `.58` |
 | `--sl-shade3` | Chat background shade opacity at 68%. | `.56` |
+
+## Effort picker
+
+Selectors: `[data-chat-composer-form] [data-chat-provider-model-picker]` (using aria-label) and `[data-model-picker-effort] [role="radiogroup"] > [data-effort-level]`. Per-rank variables: `--t` (label), `--c` (color), `--a` (strength 22-100), `--sd`/`--st` (sheen duration and steps). Colors follow the System-window palette: E steel #6b7385, D #6a8fc8, C #3d8bff, B #34a9ff, A #39d3ff, S ice-white #f2fbff, MONARCH black core with #8cc4ff edge.
+
+## Keep it cheap
+
+- Animations on the 125 ms grid with steps() counted per keyframe segment.
+- Animate only opacity/transform.
+- Never animate custom properties.
+- Give transformed pseudo-elements display:inline-block or block.
 
 ## Colors
 
@@ -55,7 +65,7 @@ When the context window reaches amber or red, these variables switch to amber (`
 | What | How to change it |
 |---|---|
 | Header chip text | `--hdr`: "System online", "Quest active" (agent working), "Awaiting orders" (question waiting), "Mana low" (amber), "Penalty zone" (red) |
-| Rank names | `--rk`, set by context-window fill: 0–9% E-rank, 10–24% D-rank, 25–44% C-rank, 45–59% B-rank, 60–74% A-rank, 75–79% S-rank, 80–89% National-level, 90–96% Monarch, 97–100% Shadow Monarch |
+| Context (GATE rank) | The header chip reads "◆ <state> · <X>-rank Gate": 0-9% E, 10-24% D, 25-44% C, 45-59% B, 60-74% A, 75-100% S; at T3's red context stage it reads "Red Gate". States: System online / Quest active (working) / Awaiting orders (question) / Mana low (amber) / Penalty zone (red). At red the assistant label reads "[ DUNGEON BREAK ]" and the details card "[ PENALTY ZONE ]". |
 | Label font | `--sysfont` (Bahnschrift, then Segoe UI) |
 | Labels | Search `css` for `[ SYSTEM ]`, `[ QUEST COMPLETE ]`, `[ NOTIFICATION ]`, `HUNTER` (your messages) and `COMMAND` (composer), and edit the `content:` text |
 
@@ -71,8 +81,8 @@ The overlays are positioned in image pixels converted to screen size: x maps to 
 
 | Layer | Selector | Behavior | Knobs |
 |---|---|---|---|
-| Hood's eyes and the figure's glint | `[data-workspace-area="conversation"]::before` | The red eyes breathe at idle (`slEye 8s`). A heartbeat (`slBeat`) plays while an agent works, a question waits, or context is amber/red. Typing applies `--sl-watch`, which brightens the eyes and shows a small blue glint on each of the figure's eyes. | `--beatT` = heartbeat period: 9s idle, 3s working, 1.5s with a question, 6s amber, 3.6s red |
-| Distant army | `[data-workspace-area="conversation"]::after` | 14 soldier glints. At idle, one soldier opens its eyes every ~2.6s at the default blink speed. Working, a waiting question, or hovering Send sets `--army: 1`, and the eyes light in a wave outward from the figure. | `--sl-blink` and `--sl-wave` |
+| Hood's eyes and the figure's glint | `[data-workspace-area="conversation"]::before` | Drawn as animated SVG images (data URIs); one SVG per state, switched by CSS. Eyes breathe at idle, heartbeat while working, brighter with a small blue glint on the figure's eyes while typing. | `--sl-watch` typing brightness |
+| Distant army | `[data-workspace-area="conversation"]::after` | Drawn as animated SVG images (data URIs); one SVG per state, switched by CSS. At idle one soldier opens its eyes about every 2.6s; working / question / Send-hover: a wave lights them outward from the figure, then they pulse with the heartbeat. `--sl-blink` removed (blink rhythm baked into the army SVG). | `--sl-wave` |
 | Floating specks | `[data-workspace-area="conversation"] > :last-child::after` | Specks drift up the left 46% of the chat, behind the text. | `--sl-specks` |
 
 All background animation sits inside `@media (prefers-reduced-motion: no-preference)`, so the OS "reduce motion" setting turns it off.
