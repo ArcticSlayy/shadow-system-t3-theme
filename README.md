@@ -11,7 +11,9 @@
 ![no blur](https://img.shields.io/badge/backdrop_blur-none-162234?style=flat-square)
 ![MIT code](https://img.shields.io/badge/code-MIT-3d8bff?style=flat-square)
 
-**[Screenshots](#screenshots)** · **[What reacts](#what-reacts-to-what)** · **[Install](#install)** · **[Customize](#customize)**
+Made by **[@ArcticSlayy](https://github.com/ArcticSlayy)**
+
+**[Screenshots](#screenshots)** · **[What reacts](#what-reacts-to-what)** · **[Install](#install)** · **[Ask your agent](#or-just-ask-your-t3-agent)** · **[Customize](#customize)**
 
 </div>
 
@@ -35,7 +37,7 @@ The art is not just wallpaper. Its glowing eyes, the distant army, the header ch
 
 <p align="center">
   <img src="docs/screenshots/eyes-idle-vs-typing.png" alt="Close-up of the hooded figure's eyes, idle on the left and typing on the right" width="100%"><br>
-  <sub>Detail: the same eyes idle (left) and while typing (right).</sub>
+  <sub>Detail: idle (left) and while typing (right), when the small figure's eyes catch a blue glint.</sub>
 </p>
 
 <p align="center">
@@ -104,6 +106,26 @@ sh install.sh
 
 Both scripts create the folder if it is missing, copy the two files, print what they did, and never delete anything. If a different `shadow-system` file is already there, it is saved as `*.bak` first. Then pick the theme as in step 4 above.
 
+## Or just ask your T3 agent
+
+T3 Code agents can install and restyle themes themselves. Paste this into a thread:
+
+```text
+Install the Shadow System theme from https://github.com/ArcticSlayy/shadow-system-t3-theme.
+Download theme/shadow-system.json and theme/shadow-system.png from the main branch and
+copy both into my T3 Code themes folder (~/.t3/userdata/themes/, or
+$T3CODE_HOME/userdata/themes/ if that variable is set). Keep the file names exactly.
+Then switch T3 Code to the shadow-system theme in dark mode.
+```
+
+Then ask for changes in plain words, for example:
+
+- *"In the shadow-system theme, change the blue accent to green everywhere."*
+- *"Turn off the floating specks in the shadow-system theme."*
+- *"Use my picture `C:\path\to\art.png` as the shadow-system background and remove the eye and army glows."*
+
+The agent edits `shadow-system.json` in the themes folder. Keep a copy of the original in case you want it back.
+
 ## Customize
 
 Everything lives in `theme/shadow-system.json`:
@@ -146,6 +168,7 @@ CSS can't restyle everything:
 
 ## Credits and disclaimer
 
+- **Made by** [@ArcticSlayy](https://github.com/ArcticSlayy). Issues and PRs welcome.
 - **Code** (the theme CSS/JSON and install scripts): [MIT](LICENSE).
 - **Background art** (`theme/shadow-system.png`): AI-generated fan art inspired by *Solo Leveling*. It is **excluded from the MIT grant**, is not affiliated with or endorsed by the rights holders of *Solo Leveling*, and will be removed on request. See [`theme/ART-NOTICE.md`](theme/ART-NOTICE.md).
 - "T3 Code" and "Solo Leveling" belong to their respective owners. This is an unofficial community theme.
